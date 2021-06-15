@@ -79,6 +79,7 @@ class Character {
 }
 
 let inventory = [];
+let badgeTypes = [];
 /*let companions = []; Don't need this currently as working with one Pokaymon*/
 
 class Pokaymon extends Character {
@@ -122,7 +123,7 @@ class Item {
         this._description = value;
     }
     describe() {
-        return this._name + ", this is a " + this._description;
+        return this._name + ", " + this._description;
     }
 }
 
@@ -141,7 +142,7 @@ class Badge extends Item {
         return this._name + " " + this._description;
     }
 }
-let fightStatus;
+
 class GymLeader extends Pokaymon {
     constructor(name, description, conversation, type, weakness, badge) {
         super(name, description, conversation, type, weakness)
@@ -154,7 +155,7 @@ class GymLeader extends Pokaymon {
         this._badge = value;
     }    
     fight() {
-        if (this._weakness === "electric" /*|| inventory.includes(this.weakness)*/) {
+        if (this._weakness === "electric" || badgeTypes.includes(this.weakness)) {
             return true;
         } else {
             return false;
@@ -207,6 +208,7 @@ function search(city) {
         text = "There are no items to be found here."
     } else {
         text = "You have found " + city.item.describe() + "!";
+        inventory.push(city.item.name);
     }
     document.getElementById("currentEvent").innerHTML = text;
     document.getElementById("userInput").focus();   
@@ -214,19 +216,48 @@ function search(city) {
 
 function fight(GymLeader) {
     let msg = "";
-    if (check(GymLeader.fight())) {
-        msg = "Your attack was effective! Peekachoo wins! You have gained the " + city.character.badge.describe() + "!";
-        inventory.push(this._badge);
+    if (inventory.includes(currentCity.character.badge.name)) {
+        msg = "You have already beaten this Gym Leader and have their badge!"
+    } else if (GymLeader.fight()) {
+        msg = "Your attack was effective! Peekachoo wins! You have gained the " + currentCity.character.badge.describe() + "!";
+        inventory.push(currentCity.character.badge.name);
+        badgeTypes.push(currentCity.character.badge.type);
     } else {
         loseGame();
     }
+
     document.getElementById("currentEvent").innerHTML = msg;
+    document.getElementById("userInput").focus();
+    if (badgeTypes.length === 8) {
+        alert("Congratulations you have all 8 Canto gym badges and have beaten the game!");
+        startGame();
+    }
+}
+
+function give() {
+    let text;
+    console.log(inventory);
+    if (currentCity.name === "Amber City") {
+        if (inventory.includes("Potion")) {
+            text = "You have given your potion to help heal Hermione's Pokaymon. She gives you the Quagmire badge in thanks.";
+            inventory = inventory.filter(word => word !== "Potion");
+            inventory.push(currentCity.character.badge.name);
+            badgeTypes.push(currentCity.character.badge.type);
+            console.log(inventory);
+        } else {
+            text = "Uh oh, it looks like you don't have a Potion. Maybe look around to find one.";
+        }
+    } else {
+        text = "";
+        alert("This is not a valid command here!");
+    }
+    document.getElementById("currentEvent").innerHTML = text;
     document.getElementById("userInput").focus();
 }
 
 function loseGame() {
     alert("You received a critical hit and unfortunately Peekachoo fainted.")
-    /*Need to make the game start again*/
+    startGame();
 }
 
 let currentCity;
@@ -251,7 +282,9 @@ function startGame() {
                 search(currentCity);
             } else if (command.toLowerCase() === "fight") {
                 fight(currentCity.character);
-            }else if (directions.includes(command.toLowerCase())) {
+            } else if(command.toLowerCase() === "give") {
+                give();
+            } else if (directions.includes(command.toLowerCase())) {
                 currentCity = currentCity.move(command.toLowerCase());
                 displayCityInfo(currentCity);
             } else {
@@ -285,13 +318,14 @@ const peekachoo = new Pokaymon("Peekachoo", "is an electric-type Pokaymon", "Pee
 
 const mum = new Character("Mum", "she is always there for you and always gives great advice", "Have you tried asking for help?")
 
+//Sorry for these long lines future self, come back and tidy these up sometime
 const foggy = new GymLeader("Foggy", "she is the water-type gym leader", "Hi! You're a new face! What's your policy on Pokaymon? What's your approach? My policy for battle is... an all-out offensive with Water-type Pokaymon!", "water", "electric", waterfall);
 const ericar = new GymLeader("Ericar", "she is the grass-type gym leader", "Welcome. My name is Ericar. I am the Gym Leader of Jade City Gym. I am a student of the art of flower arranging. My Pokaymon are all of the Grass type. ...Oh, I'm sorry. Did you perhaps wish to challenge me?", "grass", "fire", prism);
 const ltemerge = new GymLeader("Lt. Emerge", "he is the electric-type gym leader", "Hey, kid! What do you think you're doing here? You won't live long in combat! Not with your puny power! I tell you, kid, electric Pokaymon saved me during the war! They zapped my enemies into paralysis! The same as I'll do you to you.", "electric", "ground", cracking);
 const flame = new GymLeader("Flame", "he is the fire-type gym leader", "Hah! I'm Flame, the red-hot Leader of Scarlet Gym! My fiery Pokaymon are all ready with intense heat! They incinerate all challengers!","fire", "rock", lava);
-const block = new GymLeader("Block", "he is the rock-type gym leader", "I'm Block, Lead City's Gym Leader. You can see just by looking at my Pokaymon how rock hard my willpower is. My Pokaymon are all hard as rock and have true-grit determination!","rock", "grass", pebble);
+const block = new GymLeader("Block", "he is the rock-type gym leader", "I'm Block, Lead City's Gym Leader. You can see just by looking at my Pokaymon how rock hard my willpower is. My Pokaymon are all hard as rock and have true-grit determination!","rock", "water", pebble);
 const hermione = new GymLeader("Hermione", "she is the psychic-type gym leader", "... So you've come! I had a vision of your arrival. My Pokaymon is hurt, if you could give me a potion, I will give you my badge.", "psychic", "", quagmire);
-const geovanni = new GymLeader("Geovanni", "he is the ground-type gym leader", "So! I must say, I am impressed you got here. Team Locket captures Pokaymon from around the world. They're important tools for keeping our criminal enterprise going. I am the leader, Geovanni! For your insolence, you will feel a world of pain!", "ground", "water", terrain);
+const geovanni = new GymLeader("Geovanni", "he is the ground-type gym leader", "So! I must say, I am impressed you got here. Team Locket captures Pokaymon from around the world. They're important tools for keeping our criminal enterprise going. I am the leader, Geovanni! For your insolence, you will feel a world of pain!", "ground", "grass", terrain);
 const toga = new GymLeader("Toga", "he is the poison-type gym leader", "Fwahahaha! A mere child like you dares to challenge me? That very idea makes me shiver with mirth! Very well, I shall show you true terror as a ninja master! Opponents can't lay a hand on me, as poison brings their steady doom.", "poison", "psychic", spirit);
 
 cratetown.character = mum;
@@ -317,38 +351,38 @@ hermione.badge = quagmire;
 geovanni.badge = terrain;
 toga.badge = spirit;
 
-cratetown.linkCity("east", skyBlue);
+cratetown.linkCity("west", skyBlue);
 cratetown.linkCity("south", scarlet);
-cratetown.linkCity("west", jade);
+cratetown.linkCity("east", jade);
 
 skyBlue.linkCity("south", crimson);
-skyBlue.linkCity("west", cratetown);
+skyBlue.linkCity("east", cratetown);
 
 jade.linkCity("south", lead);
-jade.linkCity("east", cratetown);
+jade.linkCity("west", cratetown);
 
 crimson.linkCity("north", skyBlue);
 crimson.linkCity("south", amber);
-crimson.linkCity("west", scarlet);
+crimson.linkCity("east", scarlet);
 
 scarlet.linkCity("north", cratetown);
-scarlet.linkCity("east", crimson);
-scarlet.linkCity("west", lead);
+scarlet.linkCity("west", crimson);
+scarlet.linkCity("east", lead);
 scarlet.linkCity("south", olive);
 
 lead.linkCity("north", jade);
 lead.linkCity("south", blush);
-lead.linkCity("east", scarlet);
+lead.linkCity("west", scarlet);
 
 amber.linkCity("north", crimson);
-amber.linkCity("west", olive);
+amber.linkCity("east", olive);
 
 olive.linkCity("north", scarlet);
-olive.linkCity("east", amber);
-olive.linkCity("west", blush);
+olive.linkCity("west", amber);
+olive.linkCity("east", blush);
 
 blush.linkCity("north", lead);
-blush.linkCity("east", olive);
+blush.linkCity("west", olive);
 
 
 
