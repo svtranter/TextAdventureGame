@@ -183,7 +183,8 @@ function firstVisitCratetown() {
 }
 
 function help() {
-    const text = "You are a Pokaymon trainer travelling the Canto region on your quest to acquire all 8 gym badges. You can use commands such as north or east to move around. You can interact with characters or objects by using 'fight', 'search' or 'inventory'.";
+    const text = `You are a Pokaymon trainer travelling the Canto region on your quest to acquire all 8 gym badges. 
+    You can use commands such as north or east to move around. You can interact with characters or objects by using 'fight', 'search', 'give' or 'inventory'.`;
     document.getElementById("currentEvent").innerHTML = text;
     document.getElementById("userInput").focus();
 }
@@ -318,15 +319,23 @@ const peekachoo = new Pokaymon("Peekachoo", "is an electric-type Pokaymon", "Pee
 
 const mum = new Character("Mum", "she is always there for you and always gives great advice", "Have you tried asking for help?")
 
-//Sorry for these long lines future self, come back and tidy these up sometime
-const foggy = new GymLeader("Foggy", "she is the water-type gym leader", "Hi! You're a new face! What's your policy on Pokaymon? What's your approach? My policy for battle is... an all-out offensive with Water-type Pokaymon!", "water", "electric", waterfall);
-const ericar = new GymLeader("Ericar", "she is the grass-type gym leader", "Welcome. My name is Ericar. I am the Gym Leader of Jade City Gym. I am a student of the art of flower arranging. My Pokaymon are all of the Grass type. ...Oh, I'm sorry. Did you perhaps wish to challenge me?", "grass", "fire", prism);
-const ltemerge = new GymLeader("Lt. Emerge", "he is the electric-type gym leader", "Hey, kid! What do you think you're doing here? You won't live long in combat! Not with your puny power! I tell you, kid, electric Pokaymon saved me during the war! They zapped my enemies into paralysis! The same as I'll do you to you.", "electric", "ground", cracking);
-const flame = new GymLeader("Flame", "he is the fire-type gym leader", "Hah! I'm Flame, the red-hot Leader of Scarlet Gym! My fiery Pokaymon are all ready with intense heat! They incinerate all challengers!","fire", "rock", lava);
-const block = new GymLeader("Block", "he is the rock-type gym leader", "I'm Block, Lead City's Gym Leader. You can see just by looking at my Pokaymon how rock hard my willpower is. My Pokaymon are all hard as rock and have true-grit determination!","rock", "water", pebble);
-const hermione = new GymLeader("Hermione", "she is the psychic-type gym leader", "... So you've come! I had a vision of your arrival. My Pokaymon is hurt, if you could give me a potion, I will give you my badge.", "psychic", "", quagmire);
-const geovanni = new GymLeader("Geovanni", "he is the ground-type gym leader", "So! I must say, I am impressed you got here. Team Locket captures Pokaymon from around the world. They're important tools for keeping our criminal enterprise going. I am the leader, Geovanni! For your insolence, you will feel a world of pain!", "ground", "grass", terrain);
-const toga = new GymLeader("Toga", "he is the poison-type gym leader", "Fwahahaha! A mere child like you dares to challenge me? That very idea makes me shiver with mirth! Very well, I shall show you true terror as a ninja master! Opponents can't lay a hand on me, as poison brings their steady doom.", "poison", "psychic", spirit);
+const foggy = new GymLeader("Foggy", "she is the water-type gym leader", `Hi! You're a new face! What's your policy on Pokaymon?
+What's your approach? My policy for battle is... an all-out offensive with Water-type Pokaymon!`, "water", "electric", waterfall);
+const ericar = new GymLeader("Ericar", "she is the grass-type gym leader", `Welcome. My name is Ericar. I am the Gym Leader of Jade City Gym.
+I am a student of the art of flower arranging. My Pokaymon are all of the Grass type. ...Oh, I'm sorry. Did you perhaps wish to challenge me?`, "grass", "fire", prism);
+const ltemerge = new GymLeader("Lt. Emerge", "he is the electric-type gym leader", `Hey, kid! What do you think you're doing here?
+You won't live long in combat! Not with your puny power! I tell you, kid, electric Pokaymon saved me during the war! They zapped my enemies into paralysis!
+The same as I'll do you to you.`, "electric", "ground", cracking);
+const flame = new GymLeader("Flame", "he is the fire-type gym leader", `Hah! I'm Flame, the red-hot Leader of Scarlet Gym!
+My fiery Pokaymon are all ready with intense heat! They incinerate all challengers!`,"fire", "rock", lava);
+const block = new GymLeader("Block", "he is the rock-type gym leader", `I'm Block, Lead City's Gym Leader.
+You can see just by looking at my Pokaymon how rock hard my willpower is. My Pokaymon are all hard as rock and have true-grit determination!`,"rock", "water", pebble);
+const hermione = new GymLeader("Hermione", "she is the psychic-type gym leader", `... So you've come! I had a vision of your arrival.
+My Pokaymon is hurt, if you could give me a potion, I will give you my badge.`, "psychic", "", quagmire);
+const geovanni = new GymLeader("Geovanni", "he is the ground-type gym leader", `So! I must say, I am impressed you got here. Team Locket captures Pokaymon from around the world.
+They're important tools for keeping our criminal enterprise going. I am the leader, Geovanni! For your insolence, you will feel a world of pain!`, "ground", "grass", terrain);
+const toga = new GymLeader("Toga", "he is the poison-type gym leader", `Fwahahaha! A mere child like you dares to challenge me? That very idea makes me shiver with mirth!
+Very well, I shall show you true terror as a ninja master! Opponents can't lay a hand on me, as poison brings their steady doom.`, "poison", "psychic", spirit);
 
 cratetown.character = mum;
 skyBlue.character = foggy;
