@@ -153,7 +153,9 @@ class GymLeader extends Pokaymon {
     }
     set badge(value) {
         this._badge = value;
-    }    
+    }
+    //Wanted to make it so Peekachoo's weakness would make him die instantly, but if you don't have the weakness of gym leader you could win by using a potion,
+    //but I was making too complicated and needed to make this work     
     fight() {
         if (this._weakness === "electric" || badgeTypes.includes(this.weakness)) {
             return true;
@@ -184,7 +186,8 @@ function firstVisitCratetown() {
 
 function help() {
     const text = `You are a Pokaymon trainer travelling the Canto region on your quest to acquire all 8 gym badges. 
-    You can use commands such as north or east to move around. You can interact with characters or objects by using 'fight', 'search', 'give' or 'inventory'.`;
+    You can use commands such as north or east to move around. You can interact with characters or objects by using 'fight', 'search', 'give' or 'inventory'.
+    Use the enter key to submit your command!`;
     document.getElementById("currentEvent").innerHTML = text;
     document.getElementById("userInput").focus();
 }
@@ -315,10 +318,12 @@ const quagmire = new Badge("Quagmire Badge", "gained by defeating gym leader Her
 const terrain = new Badge("Terrain Badge", "gained by defeating gym leader Geovanni", "ground");
 const lava = new Badge("Lava Badge", "gained by defeating gym leader Flame", "fire");
 
+//Could add 3 starter Pokaymon to choose between at start of game if I have time
 const peekachoo = new Pokaymon("Peekachoo", "is an electric-type Pokaymon", "Peeka! Peeekkaaa!", "electric", "ground");
 
 const mum = new Character("Mum", "she is always there for you and always gives great advice", "Have you tried asking for help?")
 
+//Could add more weaknesses at some point in the future to make the path through the game less linear, but couldn't figure out checking through a weakness array quickly
 const foggy = new GymLeader("Foggy", "she is the water-type gym leader", `Hi! You're a new face! What's your policy on Pokaymon?
 What's your approach? My policy for battle is... an all-out offensive with Water-type Pokaymon!`, "water", "electric", waterfall);
 const ericar = new GymLeader("Ericar", "she is the grass-type gym leader", `Welcome. My name is Ericar. I am the Gym Leader of Jade City Gym.
@@ -332,8 +337,9 @@ const block = new GymLeader("Block", "he is the rock-type gym leader", `I'm Bloc
 You can see just by looking at my Pokaymon how rock hard my willpower is. My Pokaymon are all hard as rock and have true-grit determination!`,"rock", "water", pebble);
 const hermione = new GymLeader("Hermione", "she is the psychic-type gym leader", `... So you've come! I had a vision of your arrival.
 My Pokaymon is hurt, if you could give me a potion, I will give you my badge.`, "psychic", "", quagmire);
-const geovanni = new GymLeader("Geovanni", "he is the ground-type gym leader", `So! I must say, I am impressed you got here. Team Locket captures Pokaymon from around the world.
-They're important tools for keeping our criminal enterprise going. I am the leader, Geovanni! For your insolence, you will feel a world of pain!`, "ground", "grass", terrain);
+const geovanni = new GymLeader("Geovanni", "he is the ground-type gym leader", `So! I must say, I am impressed you got here. 
+Team Locket captures Pokaymon from around the world. They're important tools for keeping our criminal enterprise going. 
+I am the leader, Geovanni! For your insolence, you will feel a world of pain!`, "ground", "grass", terrain);
 const toga = new GymLeader("Toga", "he is the poison-type gym leader", `Fwahahaha! A mere child like you dares to challenge me? That very idea makes me shiver with mirth!
 Very well, I shall show you true terror as a ninja master! Opponents can't lay a hand on me, as poison brings their steady doom.`, "poison", "psychic", spirit);
 
